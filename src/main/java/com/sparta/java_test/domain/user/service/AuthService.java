@@ -43,7 +43,10 @@ public class AuthService {
 
         String token = jwtUtil.createToken(user);
 
-        return SignupResponse.builder().role(role).build();
+        return SignupResponse.builder()
+                .username(username)
+                .nickname(nickname)
+                .role(role).build();
     }
 
     public SignResponse sign(SignRequest signRequest) {
