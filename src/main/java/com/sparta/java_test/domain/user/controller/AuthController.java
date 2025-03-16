@@ -5,6 +5,8 @@ import com.sparta.java_test.domain.user.entity.AuthUser;
 import com.sparta.java_test.domain.user.entity.User;
 import com.sparta.java_test.domain.user.entity.UserRole;
 import com.sparta.java_test.domain.user.service.AuthService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +17,12 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@Tag(name = "Auth API", description = "사용자 인증 관련 API")
 public class AuthController {
 
     private final AuthService authService;
 
+    @Operation(summary = "회원가입", description = "새로운 사용자 등록.")
     @PostMapping("/signup")
     public ResponseEntity<?> join(@RequestBody SignupRequest signupRequest) {
         try {
@@ -30,6 +34,7 @@ public class AuthController {
         }
     }
 
+    @Operation(summary = "로그인", description = "JWT 토큰 발급.")
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody SignRequest signRequest) {
         try {
@@ -41,6 +46,7 @@ public class AuthController {
         }
     }
 
+    @Operation(summary = "권한 부여", description = "사용자 권한 부여.")
     @PatchMapping("/admin/users/{userId}/roles")
     public ResponseEntity<?> grantAdminRole(@PathVariable Long userId, @AuthenticationPrincipal AuthUser authUser) {
         // 요청자가 관리자 권한을 가지고 있는지 확인
