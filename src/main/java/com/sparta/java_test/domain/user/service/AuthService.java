@@ -60,4 +60,15 @@ public class AuthService {
 
         return SignResponse.builder().token(token).build();
     }
+
+    @Transactional
+    public User grantAdminRole(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() ->
+                new IllegalArgumentException("해당 사용자가 존재하지 않습니다.")
+        );
+
+        user.changeRole(UserRole.ROLE_ADMIN);
+
+        return userRepository.save(user);
+    }
 }

@@ -36,4 +36,9 @@ public class User {
         this.role = role;
     }
 
+    // 유저 권한 부여
+    public void changeRole(UserRole role) {
+        this.role = role;
+    }
+
 }

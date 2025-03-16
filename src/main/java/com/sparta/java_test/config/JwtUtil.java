@@ -21,7 +21,6 @@ import java.util.Date;
 public class JwtUtil {
     private static final String BEARER_PREFIX = "Bearer ";
     private static final long TOKEN_TIME = 60 * 60 * 1000L; // 60분
-    private static final long Refresh_TOKEN_TIME = 60 * 60 * 1000L;
     private static final SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
 
     @Value("${jwt.secret.key}")
@@ -47,19 +46,6 @@ public class JwtUtil {
                         .claim("userRole", user.getRole())
                         .setExpiration(expirationTime)
                         .setIssuedAt(now) // 발급일
-                        .signWith(key, signatureAlgorithm) // 암호화 알고리즘
-                        .compact();
-    }
-    // 리프레시 토큰
-    public String createRefreshToken(String username, UserRole role) {
-        Date date = new Date();
-
-        return BEARER_PREFIX +
-                Jwts.builder()
-                        .setSubject(username) // 사용자 식별자값(ID)
-                        .claim("userRole", role.name()) // 사용자 권한
-                        .setExpiration(new Date(date.getTime() + Refresh_TOKEN_TIME)) // 만료 시간
-                        .setIssuedAt(date) // 발급일
                         .signWith(key, signatureAlgorithm) // 암호화 알고리즘
                         .compact();
     }
