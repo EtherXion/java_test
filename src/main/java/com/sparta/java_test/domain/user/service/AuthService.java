@@ -29,6 +29,10 @@ public class AuthService {
         String username = signupRequest.getUsername();
         String nickname = signupRequest.getNickname();
 
+        if (userRepository.findByUsername(username).isPresent()) {
+            throw new IllegalArgumentException();
+        }
+
         String encodedPassword = passwordEncoder.encode(signupRequest.getPassword());
         UserRole role = ROLE_USER;
 
