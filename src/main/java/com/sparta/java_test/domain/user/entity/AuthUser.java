@@ -16,9 +16,9 @@ public class AuthUser implements UserDetails {
     private final String username;
     private final UserRole userRole;
 
-    public AuthUser(Long id, String email, UserRole userRole) {
+    public AuthUser(Long id, String username, UserRole userRole) {
         this.id = id;
-        this.username = email;
+        this.username = username;
         this.userRole = userRole;
     }
 
